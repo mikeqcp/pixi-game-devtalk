@@ -32,6 +32,8 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
-    "pixi.js": "^4.7.3"
+    "key-js": "^0.1.1",
+    "pixi.js": "^4.7.3",
+    "ramda": "^0.25.0"
   }
 }
