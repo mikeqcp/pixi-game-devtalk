@@ -1,12 +1,12 @@
-import { both, is, equals } from 'ramda';
+import { equals, defaultTo, always } from 'ramda';
 
 export class Keyboard {
-    constructor(keyCode) {
+    constructor(keyCode, onPress, onRelease) {
         this.keyCode = keyCode;
         this.isDown = false;
         this.isUp = true;
-        this.onPress = undefined;
-        this.onRelease = undefined;
+        this.onPress = defaultTo(always)(onPress);
+        this.onRelease = defaultTo(always)(onRelease);
 
         window.addEventListener('keydown', this.downHandler, false);
         window.addEventListener('keyup', this.upHandler, false);
@@ -14,19 +14,19 @@ export class Keyboard {
 
     downHandler = event => {
         if (equals(this.keyCode)(event.keyCode)) {
-            if (both(is(true, this.isUp), is(Function, this.onPress))) {
+            if (this.isUp) {
                 this.onPress();
             }
 
-            key.isDown = true;
-            key.isUp = false;
+            this.isDown = true;
+            this.isUp = false;
         }
         event.preventDefault();
     };
 
     upHandler = event => {
         if (equals(this.keyCode)(event.keyCode)) {
-            if (both(is(true, this.isDown), is(Function, this.onRelease))) {
+            if (this.isDown) {
                 this.onRelease();
             }
 
