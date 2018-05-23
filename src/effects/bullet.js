@@ -15,6 +15,10 @@ export class Bullet {
     }
 
     onTick = () => {
+        if (this.sprite.position.y <= 0) {
+            this.destroy();
+        }
+        
         this.sprite.position.y -= 3;
         this.checkCollision();
     };
