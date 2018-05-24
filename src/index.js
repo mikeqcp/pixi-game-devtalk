@@ -5,12 +5,17 @@ import { Plane } from './characters/Plane';
 import preloadResources from './preloadResources';
 import { Enemy } from './characters/enemy';
 import Store from './helpers/Store';
+import * as PIXI from "pixi.js";
+import getTexture from "./getTexture";
 
 class Game extends Application {
     constructor(app) {
         super(app);
         this.view.className = "renderArea";
         document.getElementById("main").appendChild(this.view);
+
+        const bgSprite = new PIXI.Sprite(getTexture('images/background.jpg'));
+        this.stage.addChild(bgSprite);
 
         this.plane = new Plane();
 
@@ -49,7 +54,8 @@ class Game extends Application {
 
 window.addEventListener("load", () => {
     // List of resources to load
-    const resources = ["images/plane.png", "images/chickens.png", "images/bullet.png", "images/racoon.png"];
+    const resources = ["images/plane.png", "images/chicken.png", "images/bullet.png", "images/racoon.png",
+        "images/background.jpg"];
 
     // Then load the images
     preloadResources(resources, () => {

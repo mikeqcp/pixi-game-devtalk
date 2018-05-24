@@ -9,7 +9,7 @@ export class Enemy {
         this.id = `enemy${new Date().getTime()}`;
 
         this.sprite = new PIXI.Sprite(getTexture('images/racoon.png'));
-        this.sprite.position.set(getRandomInt(800), 0 - this.sprite.height);
+        this.sprite.position.set(getRandomInt(window.innerWidth), 0 - this.sprite.height);
     }
 
     update = () => {
