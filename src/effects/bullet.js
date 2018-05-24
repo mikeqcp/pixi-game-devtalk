@@ -13,12 +13,12 @@ export class Bullet {
         window.game.stage.addChild(this.sprite);
     }
 
-    update = () => {
+    update = (deltaTime) => {
         if (this.sprite.position.y <= 0) {
             this.destroy();
         }
-        
-        this.sprite.position.y -= 3;
+
+        this.sprite.position.y -= 3 * deltaTime;
         this.checkCollision();
     };
 

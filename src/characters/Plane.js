@@ -11,81 +11,84 @@ export class Plane {
     constructor() {
         this.id = `chicken${new Date().getTime()}`;
 
-        this.xMoving = null;
+        this.xMovingLeft = false;
+        this.xMovingRight = false;
         this.sprite = new PIXI.Sprite(getTexture('images/chicken.png'));
         this.sprite.position.set(window.innerWidth / 2, window.innerHeight - 200);
         this.leftArrowHandler = new Keyboard(Key.LEFT, this.onLeftPress, this.onLeftRelease);
         this.rightArrowHandler = new Keyboard(Key.RIGHT, this.onRightPress, this.onRightRelease);
-        this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress);
+        this.AKeyHandler = new Keyboard(Key.A, this.onLeftPress, this.onLeftRelease);
+        this.DKeyHandler = new Keyboard(Key.D, this.onRightPress, this.onRightRelease);
+        this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress, this.onSpaceRelease);
+        this.shooting = false;
+        this.toShoot = 0;
+        this.shootDelay = 10;
+        this.speed = 4;
     }
 
-    update = () => {
-        if (this.xMoving) {
-            if (this.direction === 'RIGHT' && this.sprite.position.x >= 0
+    update = (deltaTime) => {
+        if(this.toShoot > 0) {
+            this.toShoot -= deltaTime;
+        }
+
+        if(this.shooting && this.toShoot <= 0) {
+            this.toShoot = this.shootDelay;
+
+            const bullets = Store.get('bullets', []);
+
+            // XXX some assumptions about bullet/plane sprite size are made below.
+            if (not(isEmpty(bullets))) {
+                Store.add('bullets', [
+                    ...bullets,
+                    new Bullet(this.sprite.position.x + this.sprite.width / 2 - 7, this.sprite.position.y - 10)
+                ]);
+            } else {
+                Store.add('bullets', [
+                    new Bullet(this.sprite.position.x + this.sprite.width / 2 - 7, this.sprite.position.y - 10)
+                ]);
+            }
+        }
+
+        if (this.xMovingRight || this.xMovingLeft) {
+            if (this.xMovingRight && this.sprite.position.x >= 0
                 && this.sprite.position.x < window.innerWidth - this.sprite.width) {
-                return this.sprite.position.x += this.xMoving;
+                return this.sprite.position.x += this.speed * deltaTime;
             }
 
-            if (this.direction === 'RIGHT' && this.sprite.position.x >= 0
+            if (this.xMovingRight && this.sprite.position.x >= 0
                 && this.sprite.position.x >= window.innerWidth - this.sprite.width) {
                 return this.sprite.position.x = window.innerWidth - this.sprite.width;
             }
 
-            if (this.direction === 'LEFT' && this.sprite.position.x <= 0) {
+            if (this.xMovingLeft && this.sprite.position.x <= 0) {
                 return this.sprite.position.x = 0;
             }
 
-            return this.sprite.position.x -= this.xMoving;
+            return this.sprite.position.x -= this.speed * deltaTime;
         }
     };
 
     onSpacePress = () => {
-        const bullets = Store.get('bullets', []);
+        this.shooting = true;
+    };
 
-        if (not(isEmpty(bullets))) {
-            return Store.add('bullets', [
-                ...bullets,
-                new Bullet(this.sprite.position.x + this.sprite.width / 2, this.sprite.position.y)
-            ]);
-        }
-
-        return Store.add('bullets', [
-            new Bullet(this.sprite.position.x + this.sprite.width / 2, this.sprite.position.y)
-        ]);
+    onSpaceRelease = () => {
+        this.shooting = false;
     };
 
     onLeftPress = () => {
-        if (this.direction) {
-            return;
-        }
-
-        this.direction = 'LEFT';
-        this.xMoving = 4;
+        this.xMovingLeft = true;
     };
 
     onLeftRelease = () => {
-        if (this.direction !== 'LEFT') {
-            return;
-        }
-
-        this.xMoving = null;
-        this.direction = null;
+        this.xMovingLeft = false;
     };
 
     onRightPress = () => {
-        if (this.direction) {
-            return;
-        }
-        this.direction = 'RIGHT';
-        this.xMoving = 4;
+        this.xMovingRight = true;
     };
 
     onRightRelease = () => {
-        if (this.direction !== 'RIGHT') {
-            return;
-        }
-
-        this.xMoving = null;
-        this.direction = null;
+        this.xMovingRight = false;
     };
 }

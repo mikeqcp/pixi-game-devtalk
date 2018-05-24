@@ -22,13 +22,13 @@ class Game extends Application {
         this.stage.addChild(this.plane.sprite);
         this.renderer.render(this.stage);
 
-        this.ticker.add(() => {
+        this.ticker.add((deltaTime) => {
            const enemies = Store.get('enemies', []);
            const bullets = Store.get('bullets', []);
 
-           this.plane.update();
-           enemies.forEach(enemy => enemy.update());
-           bullets.forEach(bullet => bullet.update());
+           this.plane.update(deltaTime);
+           enemies.forEach(enemy => enemy.update(deltaTime));
+           bullets.forEach(bullet => bullet.update(deltaTime));
         });
 
         this.addEnemies();
