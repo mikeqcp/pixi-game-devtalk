@@ -5,8 +5,7 @@ import getTexture from '../getTexture';
 import collision from "../helpers/collision";
 
 export class Bullet {
-    constructor(ticker, x, y) {
-        ticker.add(this.onTick);
+    constructor(x, y) {
         this.id = `bullet${new Date().getTime()}`;
 
         this.sprite = new PIXI.Sprite(getTexture('images/bullet.png'));
@@ -14,7 +13,7 @@ export class Bullet {
         window.game.stage.addChild(this.sprite);
     }
 
-    onTick = () => {
+    update = () => {
         if (this.sprite.position.y <= 0) {
             this.destroy();
         }

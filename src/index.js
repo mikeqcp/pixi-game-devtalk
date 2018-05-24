@@ -12,10 +12,20 @@ class Game extends Application {
         this.view.className = "renderArea";
         document.getElementById("main").appendChild(this.view);
 
-        this.plane = new Plane(this.ticker);
+        this.plane = new Plane();
 
         this.stage.addChild(this.plane.sprite);
         this.renderer.render(this.stage);
+
+        this.ticker.add(() => {
+           const enemies = Store.get('enemies', []);
+           const bullets = Store.get('bullets', []);
+
+           this.plane.update();
+           enemies.forEach(enemy => enemy.update());
+           bullets.forEach(bullet => bullet.update());
+        });
+
         this.addEnemies();
     }
 

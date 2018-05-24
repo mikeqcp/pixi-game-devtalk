@@ -9,10 +9,8 @@ import { Bullet } from '../effects/bullet';
 import Store from '../helpers/Store';
 
 export class Plane {
-    constructor(ticker) {
-        this.ticker = ticker;
+    constructor() {
         this.id = `plane${new Date().getTime()}`;
-        ticker.add(this.onTick);
 
         this.xMoving = null;
         this.sprite = new PIXI.Sprite(getTexture('images/plane.png'));
@@ -22,7 +20,7 @@ export class Plane {
         this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress);
     }
 
-    onTick = () => {
+    update = () => {
         if (this.xMoving) {
             if (this.direction === 'RIGHT' && this.sprite.position.x >= 0 && this.sprite.position.x < WIDTH - 85) {
                 return this.sprite.position.x += this.xMoving;
@@ -46,12 +44,12 @@ export class Plane {
         if (not(isEmpty(bullets))) {
             return Store.add('bullets', [
                 ...bullets,
-                new Bullet(this.ticker, this.sprite.position.x + 42, this.sprite.position.y)
+                new Bullet(this.sprite.position.x + 42, this.sprite.position.y)
             ]);
         }
 
         return Store.add('bullets', [
-            new Bullet(this.ticker, this.sprite.position.x + 42, this.sprite.position.y)
+            new Bullet(this.sprite.position.x + 42, this.sprite.position.y)
         ]);
     };
 

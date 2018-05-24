@@ -5,17 +5,14 @@ import Store from '../helpers/Store';
 import { getRandomInt } from '../helpers/functions';
 
 export class Enemy {
-    constructor(ticker) {
-        this.ticker = ticker;
+    constructor() {
         this.id = `enemy${new Date().getTime()}`;
-        ticker.add(this.onTick);
-
 
         this.sprite = new PIXI.Sprite(getTexture('images/racoon.png'));
         this.sprite.position.set(getRandomInt(800), 0 - this.sprite.height);
     }
 
-    onTick = () => {
+    update = () => {
         if (this.sprite.y > window.innerHeight) {
             return this.destroy();
         }
