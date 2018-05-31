@@ -32,9 +32,11 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "event-emitter": "^0.3.5",
     "key-js": "^0.1.1",
     "lodash": "^4.17.10",
     "pixi.js": "^4.7.3",
-    "ramda": "^0.25.0"
+    "ramda": "^0.25.0",
+    "victor": "^1.1.0"
   }
 }

@@ -6,6 +6,8 @@ import getTexture from '../getTexture';
 import { Keyboard } from '../helpers/Keyboard';
 import { Bullet } from '../effects/bullet';
 import Store from '../helpers/Store';
+import { EGG_HATCH_END, EGG_HATCH_START, EGG_HATCHED, emitter } from '../game/game.events';
+import { positionToVector } from "../helpers/vectors";
 
 export class Plane {
     constructor() {
@@ -20,6 +22,7 @@ export class Plane {
         this.AKeyHandler = new Keyboard(Key.A, this.onLeftPress, this.onLeftRelease);
         this.DKeyHandler = new Keyboard(Key.D, this.onRightPress, this.onRightRelease);
         this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress, this.onSpaceRelease);
+        this.ctrlHandler = new Keyboard(Key.CONTROL, this.onCtrlPress, this.onCtrlRelease);
         this.shooting = false;
         this.toShoot = 0;
         this.shootDelay = 10;
@@ -91,4 +94,7 @@ export class Plane {
     onRightRelease = () => {
         this.xMovingRight = false;
     };
+
+    onCtrlPress = () => emitter.emit(EGG_HATCH_START, positionToVector(this.sprite.position));
+    onCtrlRelease = () => emitter.emit(EGG_HATCH_END, positionToVector(this.sprite.position));
 }

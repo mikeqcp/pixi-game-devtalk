@@ -7,6 +7,7 @@ import { Enemy } from './characters/enemy';
 import Store from './helpers/Store';
 import * as PIXI from "pixi.js";
 import getTexture from "./getTexture";
+import GameState from './game/game.state';
 
 class Game extends Application {
     constructor(app) {
