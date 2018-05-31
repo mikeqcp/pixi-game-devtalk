@@ -26,6 +26,8 @@ class Game extends Application {
         document.getElementById("main").appendChild(this.view);
 
         const bgSprite = new PIXI.Sprite(getTexture('images/background.jpg'));
+        bgSprite.width = window.innerWidth;
+        bgSprite.height = window.innerHeight;
         this.stage.addChild(bgSprite);
 
         this.plane = new Plane();
