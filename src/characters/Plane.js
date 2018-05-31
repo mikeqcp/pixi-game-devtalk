@@ -18,23 +18,9 @@ export class Plane {
     constructor() {
         this.id = `chicken${new Date().getTime()}`;
 
-        this.xMovingLeft = false;
-        this.xMovingRight = false;
-        this.yMovingUp = false;
-        this.yMovingDown = false;
         this.sprite = new PIXI.Sprite(getTexture('images/chicken.png'));
         this.sprite.position.set(window.innerWidth / 2, window.innerHeight - 200);
         this.sprite.anchor.x = this.sprite.anchor.y = .5;
-
-        this.leftArrowHandler = new Keyboard(Key.LEFT, this.onLeftPress, this.onLeftRelease);
-        this.rightArrowHandler = new Keyboard(Key.RIGHT, this.onRightPress, this.onRightRelease);
-        this.upArrowHandler = new Keyboard(Key.UP, this.onUpPress, this.onUpRelease);
-        this.downArrowHandler = new Keyboard(Key.DOWN, this.onDownPress, this.onDownRelease);
-
-        this.AKeyHandler = new Keyboard(Key.A, this.onLeftPress, this.onLeftRelease);
-        this.DKeyHandler = new Keyboard(Key.D, this.onRightPress, this.onRightRelease);
-        this.WKeyHandler = new Keyboard(Key.W, this.onUpPress, this.onUpRelease);
-        this.SKeyHandler = new Keyboard(Key.S, this.onDownPress, this.onDownRelease);
 
         this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress, this.onSpaceRelease);
         this.ctrlHandler = new Keyboard(Key.CONTROL, this.onCtrlPress, this.onCtrlRelease);
@@ -50,11 +36,16 @@ export class Plane {
     };
 
     get isMoving() {
-        return this.xMovingRight || this.xMovingLeft || this.yMovingDown || this.yMovingUp;
+        return this.isMovingDown || this.isMovingLeft || this.isMovingRight || this.isMovingUp;
     }
 
     speedUp = () => this.speed = Math.min(this.speed += ACCELERATION, MAX_SPEED);
     resetSpeed = () => this.speed = INITIAL_SPEED;
+
+    get isMovingUp() {return [Key.W, Key.UP].some(Key.isDown)}
+    get isMovingDown() {return [Key.S, Key.DOWN].some(Key.isDown)}
+    get isMovingLeft() {return [Key.A, Key.LEFT].some(Key.isDown)}
+    get isMovingRight() {return [Key.D, Key.RIGHT].some(Key.isDown)}
 
     update = (deltaTime) => {
         if (this.isMoving) {
@@ -87,10 +78,10 @@ export class Plane {
 
         if (this.isMoving) {
             let moveVector = new Vector(0, 0);
-            if(this.xMovingLeft) { moveVector = moveVector.add(new Vector(-1, 0)); }
-            if(this.xMovingRight) { moveVector = moveVector.add(new Vector(1, 0)); }
-            if(this.yMovingDown) { moveVector = moveVector.add(new Vector(0, 1)); }
-            if(this.yMovingUp) { moveVector = moveVector.add(new Vector(0, -1)); }
+            if(this.isMovingLeft) { moveVector = moveVector.add(new Vector(-1, 0)); }
+            if(this.isMovingRight) { moveVector = moveVector.add(new Vector(1, 0)); }
+            if(this.isMovingDown) { moveVector = moveVector.add(new Vector(0, 1)); }
+            if(this.isMovingUp) { moveVector = moveVector.add(new Vector(0, -1)); }
 
             const currentPosition = positionToVector(this.sprite.position);
 
@@ -108,38 +99,6 @@ export class Plane {
 
     onSpaceRelease = () => {
         this.shooting = false;
-    };
-
-    onLeftPress = () => {
-        this.xMovingLeft = true;
-    };
-
-    onLeftRelease = () => {
-        this.xMovingLeft = false;
-    };
-
-    onRightPress = () => {
-        this.xMovingRight = true;
-    };
-
-    onRightRelease = () => {
-        this.xMovingRight = false;
-    };
-
-    onUpPress = () => {
-        this.yMovingUp = true;
-    };
-
-    onUpRelease = () => {
-        this.yMovingUp = false;
-    };
-
-    onDownPress = () => {
-        this.yMovingDown = true;
-    };
-
-    onDownRelease = () => {
-        this.yMovingDown = false;
     };
 
     onCtrlPress = () => emitter.emit(EGG_HATCH_START, positionToVector(this.sprite.position));

@@ -6,6 +6,7 @@ import getTexture from "../getTexture";
 import { Application } from "pixi.js";
 import { isEmpty, not } from "ramda";
 import GameState from './game.state';
+import keyJs from 'key-js';
 
 const gameInstanceOpts = {
     width: window.innerWidth,
@@ -45,6 +46,7 @@ class Game extends Application {
         });
 
         this.addEnemies();
+        keyJs.startCapture();
     }
 
     addEnemies = () => setInterval(() => {
