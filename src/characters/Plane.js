@@ -24,6 +24,7 @@ export class Plane {
         this.yMovingDown = false;
         this.sprite = new PIXI.Sprite(getTexture('images/chicken.png'));
         this.sprite.position.set(window.innerWidth / 2, window.innerHeight - 200);
+        this.sprite.anchor.x = this.sprite.anchor.y = .5;
 
         this.leftArrowHandler = new Keyboard(Key.LEFT, this.onLeftPress, this.onLeftRelease);
         this.rightArrowHandler = new Keyboard(Key.RIGHT, this.onRightPress, this.onRightRelease);
