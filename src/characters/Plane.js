@@ -10,6 +10,10 @@ import Store from '../helpers/Store';
 import { EGG_HATCH_END, EGG_HATCH_START, EGG_HATCHED, emitter } from '../game/game.events';
 import { positionToVector, vectorAsPosition } from "../helpers/vectors";
 
+const INITIAL_SPEED = 4;
+const MAX_SPEED = 8;
+const ACCELERATION = .03;
+
 export class Plane {
     constructor() {
         this.id = `chicken${new Date().getTime()}`;
@@ -36,7 +40,7 @@ export class Plane {
         this.shooting = false;
         this.toShoot = 0;
         this.shootDelay = 10;
-        this.speed = 4;
+        this.speed = INITIAL_SPEED;
     }
 
     clampPosition = v => {
@@ -48,7 +52,16 @@ export class Plane {
         return this.xMovingRight || this.xMovingLeft || this.yMovingDown || this.yMovingUp;
     }
 
+    speedUp = () => this.speed = Math.min(this.speed += ACCELERATION, MAX_SPEED);
+    resetSpeed = () => this.speed = INITIAL_SPEED;
+
     update = (deltaTime) => {
+        if (this.isMoving) {
+            this.speedUp();
+        } else {
+            this.resetSpeed();
+        }
+
         if(this.toShoot > 0) {
             this.toShoot -= deltaTime;
         }
