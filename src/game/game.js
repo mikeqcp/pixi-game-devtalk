@@ -41,6 +41,9 @@ class Game extends Application {
             bullets.forEach(bullet => bullet.update(deltaTime));
         });
         keyJs.startCapture();
+
+        const instructions = new PIXI.Text('[Space] - Shoot \[Ctrl] = Hatch');
+        this.stage.addChild(instructions);
     }
 }
 
