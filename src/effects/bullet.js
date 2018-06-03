@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import Store from '../helpers/Store';
 import getTexture from '../getTexture';
 import collision from "../helpers/collision";
+import GameState from '../game/game.state';
 
 export class Bullet {
     constructor(x, y) {
@@ -23,7 +24,7 @@ export class Bullet {
     };
 
     checkCollision = () => {
-        const enemies = Store.get('enemies', []);
+        const enemies = GameState.enemies.enemies;
         if (this.sprite.y + this.sprite.height <= 0 ) {
             return this.destroy();
         }

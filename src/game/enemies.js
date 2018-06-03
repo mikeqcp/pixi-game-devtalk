@@ -12,7 +12,7 @@ function getRandomElement(array) {
 }
 
 class Enemies {
-    _enemies = [];
+    enemies = [];
     _lastEnemy = 0;
 
     constructor() {
@@ -20,7 +20,7 @@ class Enemies {
     }
 
     remove = enemy => {
-        this._enemies = reject(equals(enemy))(this._enemies);
+        this.enemies = reject(equals(enemy))(this.enemies);
         Game.stage.removeChild(enemy.sprite);
     };
 
@@ -37,7 +37,7 @@ class Enemies {
 
     spawn = (targetEgg) => {
         const enemy = new Enemy(targetEgg);
-        this._enemies.push(enemy);
+        this.enemies.push(enemy);
         this._lastEnemy = Date.now();
         Game.stage.addChild(enemy.sprite);
     }
