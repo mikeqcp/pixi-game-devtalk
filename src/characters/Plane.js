@@ -25,6 +25,7 @@ export class Plane {
         this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress, this.onSpaceRelease);
         this.ctrlHandler = new Keyboard(Key.CONTROL, this.onCtrlPress, this.onCtrlRelease);
         this.shooting = false;
+        this.hatching = false;
         this.toShoot = 0;
         this.shootDelay = 10;
         this.speed = INITIAL_SPEED;
@@ -48,6 +49,11 @@ export class Plane {
     get isMovingRight() {return [Key.D, Key.RIGHT].some(Key.isDown)}
 
     update = (deltaTime) => {
+        if (this.hatching) {
+            return this.resetSpeed();
+        }
+
+
         if (this.isMoving) {
             this.speedUp();
         } else {
@@ -101,6 +107,12 @@ export class Plane {
         this.shooting = false;
     };
 
-    onCtrlPress = () => emitter.emit(EGG_HATCH_START, positionToVector(this.sprite.position));
-    onCtrlRelease = () => emitter.emit(EGG_HATCH_END, positionToVector(this.sprite.position));
+    onCtrlPress = () => {
+        emitter.emit(EGG_HATCH_START, positionToVector(this.sprite.position));
+        this.hatching = true;
+    };
+    onCtrlRelease = () => {
+        this.hatching = false;
+        emitter.emit(EGG_HATCH_END);
+    };
 }
