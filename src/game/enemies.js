@@ -1,10 +1,15 @@
 import { ticker } from 'pixi.js';
-import { reject, equals } from "ramda";
+import { reject, equals, range, nth } from "ramda";
 import { Enemy } from '../characters/enemy';
 import Game from "./game";
 import GameState from './game.state';
 
-const SPAWN_DELAY = 750;
+const SPAWN_DELAY = 5000;
+
+function getRandomElement(array) {
+    const max = array.length;
+    return array[Math.floor(Math.random() * max)];
+}
 
 class Enemies {
     _enemies = [];
@@ -20,15 +25,18 @@ class Enemies {
     };
 
     update = () => {
-        if (GameState.eggs.eggs.length > 0) {
+        const eggsCount = GameState.eggs.eggs.length;
+        if (eggsCount > 0) {
+            const targetEgg = getRandomElement(GameState.eggs.eggs);
+
             if (Date.now() - this._lastEnemy > SPAWN_DELAY) {
-                this.spawn();
+                this.spawn(targetEgg);
             }
         }
     };
 
-    spawn = () => {
-        const enemy = new Enemy();
+    spawn = (targetEgg) => {
+        const enemy = new Enemy(targetEgg);
         this._enemies.push(enemy);
         this._lastEnemy = Date.now();
         Game.stage.addChild(enemy.sprite);
