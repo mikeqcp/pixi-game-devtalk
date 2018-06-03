@@ -1,10 +1,8 @@
 import Store from "../helpers/Store";
 import { Plane } from "../characters/Plane";
-import { Enemy } from "../characters/enemy";
 import * as PIXI from "pixi.js";
 import getTexture from "../getTexture";
 import { Application } from "pixi.js";
-import { isEmpty, not } from "ramda";
 import GameState from './game.state';
 import keyJs from 'key-js';
 
@@ -37,33 +35,12 @@ class Game extends Application {
         this.renderer.render(this.stage);
 
         this.ticker.add((deltaTime) => {
-            const enemies = Store.get('enemies', []);
             const bullets = Store.get('bullets', []);
 
             this.plane.update(deltaTime);
-            enemies.forEach(enemy => enemy.update(deltaTime));
             bullets.forEach(bullet => bullet.update(deltaTime));
         });
-
-        this.addEnemies();
         keyJs.startCapture();
-    }
-
-    addEnemies = () => setInterval(() => {
-        const enemy = new Enemy(this.ticker);
-        this.addOrAppendEnemy(enemy);
-
-        this.stage.addChild(enemy.sprite);
-    }, 500);
-
-    addOrAppendEnemy = enemy => {
-        const enemies = Store.get('enemies', []);
-
-        if (not(isEmpty(enemies))) {
-            return Store.add('enemies', [...enemies, enemy]);
-        }
-
-        return Store.add('enemies', [enemy]);
     }
 }
 

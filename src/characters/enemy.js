@@ -1,15 +1,13 @@
-import * as PIXI from 'pixi.js';
-
-import getTexture from '../getTexture';
-import Store from '../helpers/Store';
+import { ticker } from 'pixi.js';
 import { getRandomInt } from '../helpers/functions';
+import GameState from '../game/game.state';
+import { createSprite } from "../helpers/sprite";
 
 export class Enemy {
     constructor() {
-        this.id = `enemy${new Date().getTime()}`;
-
-        this.sprite = new PIXI.Sprite(getTexture('images/racoon.png'));
+        this.sprite = createSprite('racoon.png');
         this.sprite.position.set(getRandomInt(window.innerWidth), 0 - this.sprite.height);
+        ticker.shared.add(this.update);
     }
 
     update = () => {
@@ -21,7 +19,6 @@ export class Enemy {
     };
 
     destroy = () => {
-        window.game.stage.removeChild(this.sprite);
-        Store.add('enemies', Store.get('enemies', []).filter(enemy => enemy.id !== this.id));
+        GameState.enemies.remove(this);
     }
 }

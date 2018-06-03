@@ -1,11 +1,14 @@
 import Eggs from './eggs';
+import Enemies from './enemies';
 import { Ticker } from 'pixi.js';
 import { EARN_SCORE, emitter } from './game.events';
 
 class GameState {
     _points = 0;
 
+    enemies = Enemies;
     eggs = Eggs;
+
     get ticker() { return Ticker.shared; }
 
     constructor() {
