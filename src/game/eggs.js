@@ -4,6 +4,7 @@ import { emitter, EGG_HATCH_START, EARN_SCORE, EGG_HATCH_END } from './game.even
 import { ticker } from 'pixi.js';
 import Game from './game';
 import { vectorAsPosition } from "../helpers/vectors";
+import ProgressBar from "../effects/ProgressBar";
 
 const POINTS_PER_EGG_PER_SECOND = 1;
 const EGG_HATCH_TIME = 5000;
@@ -23,12 +24,7 @@ class Eggs {
     hatchEggStart = (position) => {
         this._hatchPosition = position;
         this._hatchStart = Date.now();
-        this._progress = new PIXI.Text('0%');
-        this._progress.position.x = position.x;
-        this._progress.position.y = position.y - 50;
-        this._progress.anchor.x = .5;
-        this._progress.anchor.y = .5;
-        Game.stage.addChild(this._progress);
+        this._progress = new ProgressBar(this._hatchPosition);
     };
 
     hatchEggEnd = () => {
@@ -36,7 +32,9 @@ class Eggs {
             this.eggs.push(new Egg(this._hatchPosition));
         }
 
-        Game.stage.removeChild(this._progress);
+        if(this._progress) {
+            this._progress.destroy();
+        }
         this._progress = null;
         this._hatchPosition = null;
         this._hatchStart = null;
@@ -60,7 +58,7 @@ class Eggs {
 
         if (this.isHatching && this._progress) {
             const progress = this.timeHatching / EGG_HATCH_TIME;
-            this._progress.text = `${Math.round(progress * 100)}%`;
+            this._progress.updateProgress(progress);
         }
     }
 }
