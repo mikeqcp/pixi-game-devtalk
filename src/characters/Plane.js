@@ -7,8 +7,10 @@ import getTexture from '../getTexture';
 import { Keyboard } from '../helpers/Keyboard';
 import { Bullet } from '../effects/bullet';
 import Store from '../helpers/Store';
-import { EGG_HATCH_END, EGG_HATCH_START, EGG_HATCHED, emitter } from '../game/game.events';
+import { EGG_HATCH_END, EGG_HATCH_START, EGG_HATCHED, emitter, GAME_OVER } from '../game/game.events';
 import { positionToVector, vectorAsPosition } from "../helpers/vectors";
+import GameState from '../game/game.state';
+import collision from '../helpers/collision';
 
 const INITIAL_SPEED = 4;
 const MAX_SPEED = 8;
@@ -49,6 +51,8 @@ export class Plane {
     get isMovingRight() {return [Key.D, Key.RIGHT].some(Key.isDown)}
 
     update = (deltaTime) => {
+        this.checkGameOver();
+
         if (this.hatching) {
             return this.resetSpeed();
         }
@@ -96,6 +100,17 @@ export class Plane {
             const newPosition = currentPosition.add(moveVector.normalize().multiply(speedVector));
 
             return vectorAsPosition(this.sprite.position, this.clampPosition(newPosition));
+        }
+    };
+
+    checkGameOver = () => {
+        const enemies = GameState.enemies.enemies;
+
+        const me = this.sprite.getBounds();
+        if (enemies.some(e => {
+            return collision(me, e.sprite.getBounds());
+        })) {
+            emitter.emit(GAME_OVER);
         }
     };
 

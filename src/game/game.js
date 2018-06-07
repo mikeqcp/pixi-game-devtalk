@@ -5,7 +5,7 @@ import getTexture from "../getTexture";
 import { Application } from "pixi.js";
 import GameState from './game.state';
 import keyJs from 'key-js';
-import { GAME_START, emitter } from "./game.events";
+import { GAME_START, emitter, GAME_OVER } from "./game.events";
 
 
 const gameInstanceOpts = {
@@ -18,6 +18,8 @@ const gameInstanceOpts = {
 };
 
 class Game extends Application {
+    _over = false;
+
     constructor() {
         super(gameInstanceOpts);
         this.view.className = "renderArea";
@@ -47,6 +49,24 @@ class Game extends Application {
         const instructions = new PIXI.Text('[Space] - Shoot \n[X] = Hatch');
         this.stage.addChild(instructions);
         emitter.emit(GAME_START);
+
+        emitter.on(GAME_OVER, this.endGame);
+    }
+
+    endGame = () => {
+        if (this._over) return;
+
+        this._over = true;
+        const score = GameState.scoreController.score;
+        const summary = new PIXI.Text(`GAME OVER! \nYour score: ${score}`);
+        summary.position.x = window.innerWidth / 2;
+        summary.position.y = window.innerHeight / 2;
+        summary.anchor.x = summary.anchor.y = .5;
+
+        this.stage.addChild(summary);
+
+        this.ticker.stop();
+        this.ticker.update();
     }
 }
 

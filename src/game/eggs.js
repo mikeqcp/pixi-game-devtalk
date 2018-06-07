@@ -1,6 +1,6 @@
 import Egg from "./Egg";
 import { equals, reject, remove } from 'ramda';
-import { emitter, EGG_HATCH_START, EARN_SCORE, EGG_HATCH_END } from './game.events';
+import { emitter, EGG_HATCH_START, EARN_SCORE, EGG_HATCH_END, GAME_OVER } from './game.events';
 import { ticker } from 'pixi.js';
 import Game from './game';
 import ProgressBar from "../effects/ProgressBar";
@@ -12,6 +12,7 @@ class Eggs {
     _hatchStart = null;
     _hatchPosition = null;
     _progress = null;
+    _atLeastOneHatched = false;
 
     constructor() {
         emitter.on(EGG_HATCH_START, this.hatchEggStart);
@@ -28,6 +29,7 @@ class Eggs {
     hatchEggEnd = () => {
         if (this._hatchStart && this.timeHatching >= EGG_HATCH_TIME) {
             this.eggs.push(new Egg(this._hatchPosition));
+            this._atLeastOneHatched = true;
         }
 
         if(this._progress) {
@@ -48,6 +50,10 @@ class Eggs {
     destroyEgg = egg => {
         Game.stage.removeChild(egg.element);
         this.eggs = reject(equals(egg), this.eggs)
+
+        if (this.eggs.length === 0 && this._atLeastOneHatched) {
+            emitter.emit(GAME_OVER);
+        }
     };
 
     update = () => {
