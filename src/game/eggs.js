@@ -3,11 +3,9 @@ import { remove } from 'ramda';
 import { emitter, EGG_HATCH_START, EARN_SCORE, EGG_HATCH_END } from './game.events';
 import { ticker } from 'pixi.js';
 import Game from './game';
-import { vectorAsPosition } from "../helpers/vectors";
 import ProgressBar from "../effects/ProgressBar";
 
-const POINTS_PER_EGG_PER_SECOND = 1;
-const EGG_HATCH_TIME = 5000;
+const EGG_HATCH_TIME = 3500;
 
 class Eggs {
     eggs = [];
@@ -50,8 +48,6 @@ class Eggs {
     destroyEgg = id => this.eggs = remove(id, 1, this.eggs);
 
     update = () => {
-        emitter.emit(EARN_SCORE, this.eggs.length * POINTS_PER_EGG_PER_SECOND);
-
         if (this._hatchStart && (this.timeHatching >= EGG_HATCH_TIME)) {
             this.hatchEggEnd();
         }

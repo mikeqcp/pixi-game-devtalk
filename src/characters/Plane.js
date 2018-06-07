@@ -22,8 +22,8 @@ export class Plane {
         this.sprite.position.set(window.innerWidth / 2, window.innerHeight - 200);
         this.sprite.anchor.x = this.sprite.anchor.y = .5;
 
-        this.spaceHandler = new Keyboard(Key.SPACEBAR, this.onSpacePress, this.onSpaceRelease);
-        this.ctrlHandler = new Keyboard(Key.CONTROL, this.onCtrlPress, this.onCtrlRelease);
+        new Keyboard(Key.SPACEBAR, this.onSpacePress, this.onSpaceRelease);
+        new Keyboard(Key.X, this.onXPress, this.onXRelease);
         this.shooting = false;
         this.hatching = false;
         this.toShoot = 0;
@@ -107,11 +107,11 @@ export class Plane {
         this.shooting = false;
     };
 
-    onCtrlPress = () => {
+    onXPress = () => {
         emitter.emit(EGG_HATCH_START, positionToVector(this.sprite.position));
         this.hatching = true;
     };
-    onCtrlRelease = () => {
+    onXRelease = () => {
         this.hatching = false;
         emitter.emit(EGG_HATCH_END);
     };

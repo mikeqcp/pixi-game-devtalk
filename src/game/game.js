@@ -5,6 +5,8 @@ import getTexture from "../getTexture";
 import { Application } from "pixi.js";
 import GameState from './game.state';
 import keyJs from 'key-js';
+import { GAME_START, emitter } from "./game.events";
+
 
 const gameInstanceOpts = {
     width: window.innerWidth,
@@ -42,8 +44,9 @@ class Game extends Application {
         });
         keyJs.startCapture();
 
-        const instructions = new PIXI.Text('[Space] - Shoot \[Ctrl] = Hatch');
+        const instructions = new PIXI.Text('[Space] - Shoot \n[X] = Hatch');
         this.stage.addChild(instructions);
+        emitter.emit(GAME_START);
     }
 }
 
