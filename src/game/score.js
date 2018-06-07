@@ -5,6 +5,14 @@ import GameState from './game.state';
 
 const POINTS_PER_EGG_PER_SECOND = 1;
 
+const getComboMultiplier = count => {
+    if (count >= 25) return 15;
+    if (count >= 20) return 10;
+    if (count >= 10) return 5;
+    if (count >= 5) return 3;
+    if (count >= 3) return 2;
+    return 1;
+};
 
 class ScoreController {
     _score = 0;
@@ -28,7 +36,9 @@ class ScoreController {
 
     update = () => {
         if (Date.now() - this._lastScoreUpdate > 1000) {
-            emitter.emit(EARN_SCORE, GameState.eggsController.eggs.length * POINTS_PER_EGG_PER_SECOND);
+            const eggsCount = GameState.eggsController.eggs.length;
+            const pps = getComboMultiplier(eggsCount) * POINTS_PER_EGG_PER_SECOND;
+            emitter.emit(EARN_SCORE, pps * eggsCount);
             this._lastScoreUpdate = Date.now();
         }
     }
