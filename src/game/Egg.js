@@ -9,6 +9,8 @@ export default class Egg {
         sprite.position.x = position.x;
         sprite.position.y = position.y;
         sprite.scale.x = sprite.scale.y = .02;
+
+        sprite.anchor.x = sprite.anchor.y = .5;
         Game.stage.addChild(sprite);
         this._sprite = sprite;
     }

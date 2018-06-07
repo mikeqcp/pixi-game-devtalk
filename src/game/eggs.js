@@ -4,6 +4,7 @@ import { emitter, EGG_HATCH_START, EARN_SCORE, EGG_HATCH_END, GAME_OVER } from '
 import { ticker } from 'pixi.js';
 import Game from './game';
 import ProgressBar from "../effects/ProgressBar";
+import { positionToVector } from "../helpers/vectors";
 
 const EGG_HATCH_TIME = 1000;
 
@@ -20,7 +21,15 @@ class Eggs {
         ticker.shared.add(this.update);
     }
 
+    validatePosition = position => {
+        return this.eggs.every(e => {
+           return e.position.distance(position) > 50;
+        });
+    };
+
     hatchEggStart = (position) => {
+        if (!this.validatePosition(position)) return;
+
         this._hatchPosition = position;
         this._hatchStart = Date.now();
         this._progress = new ProgressBar(this._hatchPosition);
