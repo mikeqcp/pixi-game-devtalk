@@ -73,17 +73,10 @@ export class Plane {
 
             const bullets = Store.get('bullets', []);
 
-            // XXX some assumptions about bullet/plane sprite size are made below.
-            if (not(isEmpty(bullets))) {
-                Store.add('bullets', [
-                    ...bullets,
-                    new Bullet(this.sprite.position.x + this.sprite.width / 2 - 7, this.sprite.position.y - 10)
-                ]);
-            } else {
-                Store.add('bullets', [
-                    new Bullet(this.sprite.position.x + this.sprite.width / 2 - 7, this.sprite.position.y - 10)
-                ]);
-            }
+            Store.add('bullets', [
+                ...bullets || [],
+                new Bullet(this.sprite.position.x - 7, this.sprite.position.y - 10)
+            ]);
         }
 
         if (this.isMoving) {
