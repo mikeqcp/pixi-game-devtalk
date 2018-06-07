@@ -1,11 +1,11 @@
 import Egg from "./Egg";
-import { remove } from 'ramda';
+import { equals, reject, remove } from 'ramda';
 import { emitter, EGG_HATCH_START, EARN_SCORE, EGG_HATCH_END } from './game.events';
 import { ticker } from 'pixi.js';
 import Game from './game';
 import ProgressBar from "../effects/ProgressBar";
 
-const EGG_HATCH_TIME = 3500;
+const EGG_HATCH_TIME = 1000;
 
 class Eggs {
     eggs = [];
@@ -45,7 +45,10 @@ class Eggs {
 
     get isHatching() { return !!this._hatchStart; }
 
-    destroyEgg = id => this.eggs = remove(id, 1, this.eggs);
+    destroyEgg = egg => {
+        Game.stage.removeChild(egg.element);
+        this.eggs = reject(equals(egg), this.eggs)
+    };
 
     update = () => {
         if (this._hatchStart && (this.timeHatching >= EGG_HATCH_TIME)) {

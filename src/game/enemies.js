@@ -4,7 +4,7 @@ import { Enemy } from '../characters/enemy';
 import Game from "./game";
 import GameState from './game.state';
 
-const SPAWN_DELAY = 5000;
+const SPAWN_DELAY = 1000;
 
 function getRandomElement(array) {
     const max = array.length;
@@ -25,9 +25,9 @@ class Enemies {
     };
 
     update = () => {
-        const eggsCount = GameState.eggs.eggs.length;
+        const eggsCount = GameState.eggsController.eggs.length;
         if (eggsCount > 0) {
-            const targetEgg = getRandomElement(GameState.eggs.eggs);
+            const targetEgg = getRandomElement(GameState.eggsController.eggs);
 
             if (Date.now() - this._lastEnemy > SPAWN_DELAY) {
                 this.spawn(targetEgg);

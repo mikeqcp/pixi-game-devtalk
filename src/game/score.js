@@ -28,7 +28,7 @@ class ScoreController {
 
     update = () => {
         if (Date.now() - this._lastScoreUpdate > 1000) {
-            emitter.emit(EARN_SCORE, GameState.eggs.eggs.length * POINTS_PER_EGG_PER_SECOND);
+            emitter.emit(EARN_SCORE, GameState.eggsController.eggs.length * POINTS_PER_EGG_PER_SECOND);
             this._lastScoreUpdate = Date.now();
         }
     }

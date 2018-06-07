@@ -5,7 +5,7 @@ import Score from './score';
 class GameState {
     scoreController = Score;
     enemies = Enemies;
-    eggs = Eggs;
+    eggsController = Eggs;
 }
 
 export default new GameState();

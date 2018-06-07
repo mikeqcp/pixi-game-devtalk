@@ -10,7 +10,10 @@ export default class Egg {
         sprite.position.y = position.y;
         sprite.scale.x = sprite.scale.y = .02;
         Game.stage.addChild(sprite);
+        this._sprite = sprite;
     }
 
     get position() { return this._position; }
+
+    get element() { return this._sprite; }
 }

@@ -5,11 +5,12 @@ import { createSprite } from "../helpers/sprite";
 import { positionToVector, vectorAsPosition } from "../helpers/vectors";
 import Vector from 'victor';
 
-const SPEED = 1.5;
+const SPEED = 3;
 const CATCH_THRESHOLD = 5;
 
 export class Enemy {
     constructor(targetEgg) {
+        this._targetEgg = targetEgg;
         this.sprite = createSprite('racoon.png');
         this.sprite.position.set(getRandomInt(window.innerWidth), 0 - this.sprite.height);
         ticker.shared.add(this.update);
@@ -22,6 +23,7 @@ export class Enemy {
         }
 
         if (Math.abs(this.sprite.y - this._targetPosition.y) < CATCH_THRESHOLD || Math.abs(this.sprite.x - this._targetPosition.x) < CATCH_THRESHOLD) {
+            GameState.eggsController.destroyEgg(this._targetEgg);
             return this.destroy();
         }
 
@@ -32,6 +34,7 @@ export class Enemy {
     };
 
     destroy = () => {
+        ticker.shared.remove(this.update);
         GameState.enemies.remove(this);
     }
 }
