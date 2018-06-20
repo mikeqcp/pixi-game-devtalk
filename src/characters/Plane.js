@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import Key from 'key-js';
 import { not, isEmpty, clamp } from 'ramda';
 import Vector from 'victor';
+import convert from 'color-convert';
 
 import getTexture from '../getTexture';
 import { Keyboard } from '../helpers/Keyboard';
@@ -18,9 +19,23 @@ const ACCELERATION = .03;
 
 export class Plane {
     constructor() {
+
+        var frames = [];
+
+        for (var i = 0; i < 3; i++) {
+            var val = i < 10 ? '0' + i : i;
+
+            // magically works since the spritesheet was loaded with the pixi loader
+            frames.push(PIXI.Texture.fromFrame('walk' + val + '.png'));
+        }
+
+        this.sprite = new PIXI.extras.AnimatedSprite(frames);
+        this.sprite.play();
+        this.sprite.animationSpeed = 0.15;
+
         this.id = `chicken${new Date().getTime()}`;
 
-        this.sprite = new PIXI.Sprite(getTexture('images/chicken.png'));
+        // this.sprite = new PIXI.Sprite(getTexture('images/chicken.png'));
         this.sprite.position.set(window.innerWidth / 2, window.innerHeight - 200);
         this.sprite.anchor.x = this.sprite.anchor.y = .5;
 
@@ -31,6 +46,7 @@ export class Plane {
         this.toShoot = 0;
         this.shootDelay = 10;
         this.speed = INITIAL_SPEED;
+        this.elapsed = 0;
     }
 
     clampPosition = v => {
@@ -52,6 +68,9 @@ export class Plane {
 
     update = (deltaTime) => {
         this.checkGameOver();
+        this.elapsed += deltaTime;
+
+        this.sprite.tint = parseInt('0x' + convert.hsv.hex((this.elapsed * 8) % 360, 60, 100));
 
         if (this.hatching) {
             return this.resetSpeed();
