@@ -1,10 +1,23 @@
 import { ticker } from 'pixi.js';
-import { reject, equals, range, nth } from "ramda";
+import { reject, equals, range, nth, clamp } from "ramda";
 import { Enemy } from '../characters/enemy';
 import Game from "./game";
 import GameState from './game.state';
 
-const SPAWN_DELAY = 1000;
+const INITIAL_SPAWN_DELAY = 2000;
+const MIN_SPAWN_DELAY = 500;
+const SPAWN_DELAY_ACCURACY = 250;
+
+const SPAWN_INCRESE_THRESHOLD = 5000;   //after this amount of milliseconds spawn delay gets lowered by SPAWN_DELAY_STEP
+const SPAWN_DELAY_STEP = 250;
+
+const spawnDelay = () => {
+    const spawnSpeed =  Math.floor(GameState.gameTime / SPAWN_INCRESE_THRESHOLD);
+    const spawnDelay = INITIAL_SPAWN_DELAY - spawnSpeed * SPAWN_DELAY_STEP;
+
+    const delay = Math.floor(Math.random() * spawnDelay + SPAWN_DELAY_ACCURACY) + spawnDelay - SPAWN_DELAY_ACCURACY;
+    return clamp(MIN_SPAWN_DELAY, INITIAL_SPAWN_DELAY + SPAWN_DELAY_ACCURACY, delay);
+};
 
 function getRandomElement(array) {
     const max = array.length;
@@ -29,7 +42,7 @@ class Enemies {
         if (eggsCount > 0) {
             const targetEgg = getRandomElement(GameState.eggsController.eggs);
 
-            if (Date.now() - this._lastEnemy > SPAWN_DELAY) {
+            if (Date.now() - this._lastEnemy > spawnDelay()) {
                 this.spawn(targetEgg);
             }
         }
