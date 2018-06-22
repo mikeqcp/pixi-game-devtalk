@@ -1,4 +1,4 @@
-import { EARN_SCORE, emitter, GAME_START } from "./game.events";
+import { EARN_SCORE, emitter, GAME_RESET, GAME_START } from "./game.events";
 import PointsDisplay from "../effects/pointsDisplay";
 import Game from './game';
 import GameState from './game.state';
@@ -27,8 +27,8 @@ class ScoreController {
             this._pointsDisplay = new PointsDisplay();
             Game.stage.addChild(this._pointsDisplay.element);
 
-            emitter.on(EARN_SCORE, points => {
-                this._score += points;
+            emitter.on(EARN_SCORE, ({ total }) => {
+                this._score += total;
                 this._pointsDisplay.updateScore(this._score);
             });
         });
@@ -38,7 +38,7 @@ class ScoreController {
         if (Date.now() - this._lastScoreUpdate > 1000) {
             const eggsCount = GameState.eggsController.eggs.length;
             const pps = getComboMultiplier(eggsCount) * POINTS_PER_EGG_PER_SECOND;
-            emitter.emit(EARN_SCORE, pps * eggsCount);
+            emitter.emit(EARN_SCORE, { pointsPerEgg: pps, total: pps * eggsCount });
             this._lastScoreUpdate = Date.now();
         }
     };
@@ -46,6 +46,7 @@ class ScoreController {
     reset() {
         this._score = 0;
         this._lastScoreUpdate = Date.now();
+        this._pointsDisplay.updateScore(0);
     }
 }
 
