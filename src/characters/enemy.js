@@ -24,6 +24,7 @@ export class Enemy {
         this.sprite = new PIXI.extras.AnimatedSprite(frames);
         this.sprite.play();
         this.sprite.animationSpeed = 0.15;
+        this.sprite.anchor.set(0.5);
 
         this._targetEgg = targetEgg;
         this.sprite.position.set(getRandomInt(window.innerWidth), 0 - this.sprite.height);
@@ -142,6 +143,9 @@ export class Enemy {
         const direction = this._targetPosition.clone().subtract(currentPosition);
         const moveVector = direction.normalize().multiply(new Vector(SPEED, SPEED));
         vectorAsPosition(this.sprite.position, currentPosition.add(moveVector));
+        console.log(direction.verticalAngleDeg());
+
+        this.sprite.rotation = -moveVector.verticalAngle();
     };
 
     destroy = (withExplosion = false) => {
