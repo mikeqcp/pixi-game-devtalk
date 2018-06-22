@@ -143,7 +143,6 @@ export class Enemy {
         const direction = this._targetPosition.clone().subtract(currentPosition);
         const moveVector = direction.normalize().multiply(new Vector(SPEED, SPEED));
         vectorAsPosition(this.sprite.position, currentPosition.add(moveVector));
-        console.log(direction.verticalAngleDeg());
 
         this.sprite.rotation = -moveVector.verticalAngle();
     };
