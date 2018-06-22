@@ -61,7 +61,7 @@ class Eggs {
         this.eggs = reject(equals(egg), this.eggs);
 
         if (this.eggs.length === 0 && this._atLeastOneHatched) {
-            emitter.emit(GAME_OVER);
+            emitter.emit(GAME_OVER, { reason: "All your eggs were stolen :(" });
         }
     };
 

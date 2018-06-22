@@ -55,12 +55,12 @@ class Game extends Application {
         emitter.on(GAME_OVER, this.endGame);
     }
 
-    endGame = () => {
+    endGame = ({ reason }) => {
         if (this._over) return;
 
         this._over = true;
         const score = GameState.scoreController.score;
-        const summary = this.summary = new PIXI.Text(`GAME OVER! \nYour score: ${score}`);
+        const summary = this.summary = new PIXI.Text(`GAME OVER! \n\nYour score: ${score} \n\n${reason}`);
         summary.position.x = window.innerWidth / 2;
         summary.position.y = window.innerHeight / 2;
         summary.anchor.x = summary.anchor.y = .5;

@@ -122,7 +122,7 @@ export class Plane {
         if (enemies.some(e => {
             return collision(me, e.sprite.getBounds());
         })) {
-            emitter.emit(GAME_OVER);
+            emitter.emit(GAME_OVER, { reason: "You were eaten by racoon :("});
         }
     };
 
