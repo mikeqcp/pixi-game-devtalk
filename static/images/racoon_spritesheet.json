@@ -1,0 +1,29 @@
+{
+    "frames": {
+        "racoon_walk00.png": {
+            "frame": {"x":0,"y":0,"w":22,"h":46},
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {"x":0,"y":0,"w":22,"h":46},
+            "sourceSize": {"w":22,"h":46}
+        },
+        "racoon_walk01.png": {
+            "frame": {"x":22,"y":0,"w":22,"h":46},
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {"x":0,"y":0,"w":22,"h":46},
+            "sourceSize": {"w":22,"h":46}
+        },
+        "racoon_walk02.png": {
+            "frame": {"x":44,"y":0,"w":22,"h":46},
+            "rotated": false,
+            "trimmed": true,
+            "spriteSourceSize": {"x":0,"y":0,"w":22,"h":46},
+            "sourceSize": {"w":22,"h":46}
+        }
+    },
+    "meta": {
+        "image": "racoon_spritesheet.png"
+    }
+}
+

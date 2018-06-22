@@ -11,8 +11,8 @@ window.addEventListener("load", () => {
         "images/racoon.png",
         "images/background.jpg",
         "images/egg.png",
-        "images/chicken_spritesheet.png",
         "images/chicken_spritesheet.json",
+        "images/racoon_spritesheet.json",
     ];
 
     // Then load the images

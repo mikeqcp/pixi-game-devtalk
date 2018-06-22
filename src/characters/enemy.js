@@ -13,8 +13,19 @@ const CATCH_THRESHOLD = 5;
 
 export class Enemy {
     constructor(targetEgg) {
+        var frames = [];
+
+        for (var i = 0; i < 3; i++) {
+            var val = i < 10 ? '0' + i : i;
+
+            frames.push(PIXI.Texture.fromFrame('racoon_walk' + val + '.png'));
+        }
+
+        this.sprite = new PIXI.extras.AnimatedSprite(frames);
+        this.sprite.play();
+        this.sprite.animationSpeed = 0.15;
+
         this._targetEgg = targetEgg;
-        this.sprite = createSprite('racoon.png');
         this.sprite.position.set(getRandomInt(window.innerWidth), 0 - this.sprite.height);
         PIXI.ticker.shared.add(this.update);
         this._targetPosition = positionToVector(targetEgg.position);

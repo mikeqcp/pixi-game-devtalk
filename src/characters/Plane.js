@@ -25,8 +25,7 @@ export class Plane {
         for (var i = 0; i < 3; i++) {
             var val = i < 10 ? '0' + i : i;
 
-            // magically works since the spritesheet was loaded with the pixi loader
-            frames.push(PIXI.Texture.fromFrame('walk' + val + '.png'));
+            frames.push(PIXI.Texture.fromFrame('chicken_walk' + val + '.png'));
         }
 
         this.sprite = new PIXI.extras.AnimatedSprite(frames);
