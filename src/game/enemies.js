@@ -40,6 +40,14 @@ class Enemies {
         this.enemies.push(enemy);
         this._lastEnemy = Date.now();
         Game.stage.addChild(enemy.sprite);
+    };
+
+    reset() {
+        this._lastEnemy = 0;
+        this.enemies.forEach(en => {
+            Game.stage.removeChild(en.sprite);
+        });
+        this.enemies = [];
     }
 }
 

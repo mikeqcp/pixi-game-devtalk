@@ -41,6 +41,11 @@ class ScoreController {
             emitter.emit(EARN_SCORE, pps * eggsCount);
             this._lastScoreUpdate = Date.now();
         }
+    };
+
+    reset() {
+        this._score = 0;
+        this._lastScoreUpdate = Date.now();
     }
 }
 

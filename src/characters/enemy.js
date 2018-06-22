@@ -6,6 +6,7 @@ import { createSprite } from "../helpers/sprite";
 import { positionToVector, vectorAsPosition } from "../helpers/vectors";
 import Vector from 'victor';
 import Game from "../game/game";
+import { emitter, GAME_OVER } from "../game/game.events";
 
 const SPEED = 3;
 const CATCH_THRESHOLD = 5;
@@ -19,6 +20,10 @@ export class Enemy {
         this._targetPosition = positionToVector(targetEgg.position);
 
         this.particlesContainer = new PIXI.Container();
+
+        emitter.on(GAME_OVER, () => {
+            PIXI.ticker.shared.remove(this.update)
+        });
 
         this.emitter = new PIXI.particles.Emitter(
             this.particlesContainer,
@@ -128,16 +133,17 @@ export class Enemy {
         vectorAsPosition(this.sprite.position, currentPosition.add(moveVector));
     };
 
-    destroy = () => {
+    destroy = (withExplosion = false) => {
+        if (withExplosion) {
+            // Put the particles container in the middle of the sprite location
+            this.particlesContainer.position.set(
+                this.sprite.position.x + this.sprite.width / 2,
+                this.sprite.position.y + this.sprite.height / 2
+            );
 
-        // Put the particles container in the middle of the sprite location
-        this.particlesContainer.position.set(
-            this.sprite.position.x + this.sprite.width / 2,
-            this.sprite.position.y + this.sprite.height / 2
-        );
-
-        Game.stage.addChild(this.particlesContainer);
-        this.emitter.playOnceAndDestroy(() => Game.stage.removeChild(this.particlesContainer));
+            Game.stage.addChild(this.particlesContainer);
+            this.emitter.playOnceAndDestroy(() => Game.stage.removeChild(this.particlesContainer));
+        }
 
         PIXI.ticker.shared.remove(this.update);
         GameState.enemies.remove(this);

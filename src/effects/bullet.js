@@ -32,7 +32,7 @@ export class Bullet {
         return enemies.forEach(enemy => {
            if (collision(this.sprite, enemy.sprite)) {
                this.destroy();
-               enemy.destroy();
+               enemy.destroy(true);
            }
         });
     };

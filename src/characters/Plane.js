@@ -119,6 +119,7 @@ export class Plane {
         const enemies = GameState.enemies.enemies;
 
         const me = this.sprite.getBounds();
+
         if (enemies.some(e => {
             return collision(me, e.sprite.getBounds());
         })) {
@@ -142,4 +143,8 @@ export class Plane {
         this.hatching = false;
         emitter.emit(EGG_HATCH_END);
     };
+
+    reset() {
+        this.sprite.position.set(window.innerWidth / 2, window.innerHeight - 200);
+    }
 }

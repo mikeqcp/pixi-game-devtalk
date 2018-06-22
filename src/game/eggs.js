@@ -58,7 +58,7 @@ class Eggs {
 
     destroyEgg = egg => {
         Game.stage.removeChild(egg.element);
-        this.eggs = reject(equals(egg), this.eggs)
+        this.eggs = reject(equals(egg), this.eggs);
 
         if (this.eggs.length === 0 && this._atLeastOneHatched) {
             emitter.emit(GAME_OVER);
@@ -74,6 +74,17 @@ class Eggs {
             const progress = this.timeHatching / EGG_HATCH_TIME;
             this._progress.updateProgress(progress);
         }
+    };
+
+    reset() {
+        this._hatchStart = null;
+        this._hatchPosition = null;
+        this._progress = null;
+        this._atLeastOneHatched = false;
+        this.eggs.forEach(egg => {
+            Game.stage.removeChild(egg.element);
+        });
+        this.eggs = [];
     }
 }
 
