@@ -12,6 +12,7 @@ window.addEventListener("load", () => {
         "images/racoon.png",
         "images/background.jpg",
         "images/egg.png",
+        "images/particle.png",
         "images/chicken_spritesheet.json",
         "images/racoon_spritesheet.json",
         "sound/shoot.wav",
