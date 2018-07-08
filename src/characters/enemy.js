@@ -155,6 +155,8 @@ export class Enemy {
                 this.sprite.position.y + this.sprite.height / 2
             );
 
+            this.particlesContainer.rotation = this.particlesContainer.rotation;
+
             Game.stage.addChild(this.particlesContainer);
             this.emitter.playOnceAndDestroy(() => Game.stage.removeChild(this.particlesContainer));
         }
