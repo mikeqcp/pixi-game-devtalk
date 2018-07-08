@@ -29,7 +29,6 @@ export class Plane {
         }
 
         this.sprite = new PIXI.extras.AnimatedSprite(frames);
-        this.sprite.play();
         this.sprite.animationSpeed = 0.15;
 
         this.id = `chicken${new Date().getTime()}`;
@@ -77,8 +76,10 @@ export class Plane {
 
 
         if (this.isMoving) {
+            this.sprite.play();
             this.speedUp();
         } else {
+            this.sprite.stop();
             this.resetSpeed();
         }
 
