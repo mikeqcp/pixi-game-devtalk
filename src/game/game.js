@@ -49,7 +49,7 @@ class Game extends Application {
         this.ticker.add(this._updateBullets);
         keyJs.startCapture();
 
-        const instructions = new PIXI.Text('[Space] - Shoot \n[X] = Hatch', TEXT_STYLE);
+        const instructions = new PIXI.Text('[Space] - Shoot \n[X]     - Lay egg', TEXT_STYLE);
         instructions.position.x = 10;
         this.stage.addChild(instructions);
         emitter.emit(GAME_START);
