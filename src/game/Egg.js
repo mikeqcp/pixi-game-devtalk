@@ -3,6 +3,7 @@ import { createSprite } from "../helpers/sprite";
 import { EARN_SCORE, emitter, GAME_OVER } from "./game.events";
 import * as PIXI from "pixi.js";
 import score from "./score";
+import { TEXT_STYLE } from 'game.constants.js'
 
 const ANIMATION_TIME = 500;
 
@@ -47,7 +48,7 @@ export default class Egg {
     };
 
     _showPoints = ({ pointsPerEgg }) => {
-        const scoreLabel = new PIXI.Text(pointsPerEgg);
+        const scoreLabel = new PIXI.Text(pointsPerEgg, TEXT_STYLE);
 
         scoreLabel.position.x = this._position.x;
         scoreLabel.position.y = this._position.y - 30;

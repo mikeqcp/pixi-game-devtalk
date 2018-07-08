@@ -1,4 +1,5 @@
 import { Text } from 'pixi.js';
+import { TEXT_STYLE } from 'game.constants.js'
 
 const displayScore = v => `${v}pts`;
 
@@ -6,7 +7,8 @@ export default class PointsDisplay {
     _score = 0;
 
     constructor() {
-        const el = new Text(displayScore(this._score));
+
+        const el = new Text(displayScore(this._score), TEXT_STYLE);
         el.anchor.x = 1;
         el.anchor.y = 0;
 

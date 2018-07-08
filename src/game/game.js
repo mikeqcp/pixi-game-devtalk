@@ -6,6 +6,7 @@ import { Application } from "pixi.js";
 import GameState from './game.state';
 import keyJs from 'key-js';
 import { GAME_START, emitter, GAME_OVER, GAME_RESET } from "./game.events";
+import { TEXT_STYLE } from 'game.constants.js'
 
 
 const gameInstanceOpts = {
@@ -48,7 +49,8 @@ class Game extends Application {
         this.ticker.add(this._updateBullets);
         keyJs.startCapture();
 
-        const instructions = new PIXI.Text('[Space] - Shoot \n[X] = Hatch');
+        const instructions = new PIXI.Text('[Space] - Shoot \n[X] = Hatch', TEXT_STYLE);
+        instructions.position.x = 10;
         this.stage.addChild(instructions);
         emitter.emit(GAME_START);
 
@@ -60,7 +62,7 @@ class Game extends Application {
 
         this._over = true;
         const score = GameState.scoreController.score;
-        const summary = this.summary = new PIXI.Text(`GAME OVER! \n\nYour score: ${score} \n\n${reason}`);
+        const summary = this.summary = new PIXI.Text(`GAME OVER! \n\nYour score: ${score} \n\n${reason}`, TEXT_STYLE);
         summary.position.x = window.innerWidth / 2;
         summary.position.y = window.innerHeight / 2;
         summary.anchor.x = summary.anchor.y = .5;

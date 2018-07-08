@@ -1,4 +1,10 @@
+@font-face {
+    font-family: Visitor;
+    src: url('fonts/visitor1.ttf');
+}
+
 body {
+    font-family: Visitor;
     background-color: #EEEEEE;
     margin: 0;
     box-sizing: border-box;
@@ -9,6 +15,7 @@ body {
 }
 
 .restart-btn {
+    font-family: Visitor;
     position: absolute;
     bottom: 10%;
     left: 50%;
