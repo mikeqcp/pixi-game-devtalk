@@ -1,6 +1,7 @@
 import preloadResources from './preloadResources';
 import Game from "./game/game";
 window.game = Game; //todo: deprecate this and use module instead
+import 'pixi-sound'
 
 window.addEventListener("load", () => {
     // List of resources to load
@@ -13,6 +14,9 @@ window.addEventListener("load", () => {
         "images/egg.png",
         "images/chicken_spritesheet.json",
         "images/racoon_spritesheet.json",
+        "sound/shoot.wav",
+        "sound/boom.wav",
+        "sound/chicken.wav",
     ];
 
     // Then load the images

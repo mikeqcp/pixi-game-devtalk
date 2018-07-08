@@ -149,6 +149,8 @@ export class Enemy {
 
     destroy = (withExplosion = false) => {
         if (withExplosion) {
+            PIXI.sound.play('sound/boom.wav');
+
             // Put the particles container in the middle of the sprite location
             this.particlesContainer.position.set(
                 this.sprite.position.x + this.sprite.width / 2,

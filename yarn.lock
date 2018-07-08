@@ -2450,6 +2450,10 @@ pixi-particles@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pixi-particles/-/pixi-particles-3.0.0.tgz#72394f19d9d81c224d3eb0ad4af3786bf23bdd44"
 
+pixi-sound@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/pixi-sound/-/pixi-sound-2.0.2.tgz#3a48d72287b0a5ce2d20a240ec0d724a9f62c0a2"
+
 pixi.js@^4.7.3:
   version "4.7.3"
   resolved "https://registry.yarnpkg.com/pixi.js/-/pixi.js-4.7.3.tgz#46565cd013275f072da839e108184ad92b853745"

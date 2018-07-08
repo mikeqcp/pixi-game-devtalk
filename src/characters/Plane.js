@@ -89,6 +89,8 @@ export class Plane {
         if(this.shooting && this.toShoot <= 0) {
             this.toShoot = this.shootDelay;
 
+            PIXI.sound.play('sound/shoot.wav');
+
             const bullets = Store.get('bullets', []);
 
             Store.add('bullets', [

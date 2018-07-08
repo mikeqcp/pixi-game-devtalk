@@ -37,6 +37,7 @@
     "key-js": "^0.1.1",
     "lodash": "^4.17.10",
     "pixi-particles": "^3.0.0",
+    "pixi-sound": "^2.0.2",
     "pixi.js": "^4.7.3",
     "ramda": "^0.25.0",
     "victor": "^1.1.0"
