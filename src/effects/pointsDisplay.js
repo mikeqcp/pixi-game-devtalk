@@ -1,7 +1,7 @@
 import { Text } from 'pixi.js';
 import { TEXT_STYLE } from 'game.constants.js'
 
-const displayScore = v => `${v}pts`;
+const displayScore = v => `${v} pts`;
 
 export default class PointsDisplay {
     _score = 0;
