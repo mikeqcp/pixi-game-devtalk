@@ -33,6 +33,11 @@ class Game extends Application {
         bullets.forEach(bullet => bullet.update(deltaTime));
     };
 
+    _resetBullets = () => {
+        const bullets = Store.get('bullets', []);
+        bullets.forEach(bullet => bullet.destroy());
+    };
+
     setupStage() {
         document.getElementById("main").appendChild(this.view);
 
@@ -91,6 +96,7 @@ class Game extends Application {
         GameState.reset();
         this.stage.removeChild(this.summary);
         this.chicken.reset();
+        this._resetBullets();
         this.ticker.start();
         emitter.emit(GAME_RESET);
     }
