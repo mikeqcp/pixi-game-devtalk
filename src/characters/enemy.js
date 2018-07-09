@@ -135,7 +135,9 @@ export class Enemy {
         }
 
         if (Math.abs(this.sprite.y - this._targetPosition.y) < CATCH_THRESHOLD || Math.abs(this.sprite.x - this._targetPosition.x) < CATCH_THRESHOLD) {
-            GameState.eggsController.destroyEgg(this._targetEgg);
+            if (!this._targetEgg.isDestroyed) {
+                GameState.eggsController.destroyEgg(this._targetEgg);
+            }
             return this.destroy();
         }
 
