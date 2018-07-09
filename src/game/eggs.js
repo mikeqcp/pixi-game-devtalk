@@ -59,6 +59,7 @@ class Eggs {
 
     destroyEgg = egg => {
         Game.stage.removeChild(egg.element);
+        egg.destroy();
         this.eggs = reject(equals(egg), this.eggs);
 
         if (this.eggs.length === 0 && this._atLeastOneHatched) {

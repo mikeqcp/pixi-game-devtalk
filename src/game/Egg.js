@@ -61,5 +61,9 @@ export default class Egg {
         this._currentLabel = scoreLabel;
 
         this._lastLabelUpdate = Date.now();
+    };
+
+    destroy() {
+        emitter.off(EARN_SCORE, this._showPoints);
     }
 }
