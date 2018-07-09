@@ -11,6 +11,7 @@ export default class Egg {
     _lastLabelUpdate = 0;
 
     constructor(position) {
+        this._destroyed = false;
         this._position = position;
         const sprite = createSprite('egg.png');
 
@@ -63,7 +64,12 @@ export default class Egg {
         this._lastLabelUpdate = Date.now();
     };
 
+    get isDestroyed() {
+        return this._destroyed;
+    }
+
     destroy() {
         emitter.off(EARN_SCORE, this._showPoints);
+        this._destroyed = true;
     }
 }
