@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "prod": "chicken-defender",
+    "game": "chicken-defender"
+  }
+}
