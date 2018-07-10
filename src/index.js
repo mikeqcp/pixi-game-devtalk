@@ -17,6 +17,7 @@ window.addEventListener("load", () => {
         "images/racoon_spritesheet.json",
         "sound/shoot.wav",
         "sound/boom.wav",
+        "sound/egg.wav",
         "sound/chicken.wav",
     ];
 

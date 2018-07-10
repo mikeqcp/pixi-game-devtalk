@@ -71,5 +71,6 @@ export default class Egg {
     destroy() {
         emitter.off(EARN_SCORE, this._showPoints);
         this._destroyed = true;
+        PIXI.sound.play('sound/egg.wav');
     }
 }
