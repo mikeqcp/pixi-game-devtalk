@@ -39,6 +39,11 @@ class Eggs {
         if (this._hatchStart && this.timeHatching >= EGG_HATCH_TIME) {
             PIXI.sound.play('sound/chicken.wav');
             this.eggs.push(new Egg(this._hatchPosition));
+
+            if (!this._atLeastOneHatched) {
+                document.querySelector('audio').play();
+            }
+
             this._atLeastOneHatched = true;
         }
 
